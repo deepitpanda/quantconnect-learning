@@ -19,11 +19,14 @@ class PairsTradingAlgorithm(QCAlgorithm):
 
     def OnData(self, data):
 
-        if self.symbol1 not in data or self.symbol2 not in data:
+        bar1 = data.Bars.get(self.symbol1)
+        bar2 = data.Bars.get(self.symbol2)
+
+        if bar1 is None or bar2 is None:
             return
 
-        p1 = data[self.symbol1].Close
-        p2 = data[self.symbol2].Close
+        p1 = bar1.Close
+        p2 = bar2.Close
 
         spread = float(p1 - p2)
 
